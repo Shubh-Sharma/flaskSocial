@@ -1,0 +1,17 @@
+{% macro render_field(field) %}
+    {% if field.errors %}
+        {% for error in field.errors %}
+            <div class="red-text">{{ error }}</div>
+        {% endfor %}
+    {% endif %}
+    <div class="input-field">
+        {% if field.label.text == "What's up?" %}
+            {{ field(id='post', class='materialize-textarea') }}
+            <label for="post">{{ field.label.text }}</label>
+        {% elif field.label.text == "Email" %}
+            {{ field(placeholder=field.label.text, type='email', class='validate') }}
+        {% else %}
+            {{ field(placeholder=field.label.text, class='validate') }}
+        {% endif %}
+    </div>
+{% endmacro %}

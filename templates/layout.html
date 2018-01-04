@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Starter Template - Materialize</title>
+
+  <style>
+    body {
+      background: #afdbdd;
+    }
+    span.error {
+      color: rgb(245, 72, 72);
+    }
+    .btn-block {
+      display: block;
+      width: 100%;
+    }
+    .input-field {
+      margin: 0 !important;
+    }
+    .side-nav-top {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      background: #afdbdd;
+    }
+    .side-nav-top i {
+      position: absolute;
+      color: teal;
+      font-size: 4em;
+      display: block;
+      text-align: center;
+      width: 100%;
+      height: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  </style>
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+</head>
+<body>
+  <nav class="black">
+    <div class="nav-wrapper container">
+      <a href="{{ url_for('index') }}" class="brand-logo">Flask</a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+        {% if current_user.is_authenticated %}
+          <li><a href="{{ url_for('stream', username=current_user.username) }}">Following</a></li>
+          <li><a href="{{ url_for('post') }}">Create New Post</a></li>
+          <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        {% else %}
+          <li><a href="{{ url_for('login') }}">Login</a></li>
+          <li><a href="{{ url_for('register') }}">Register</a></li>
+        {% endif %}
+      </ul>
+      <ul class="side-nav" id="mobile-demo">
+        <div class="side-nav-top">
+          <!-- SIDE NAV TOP -->
+          <i class="material-icons">cloud</i>
+        </div>
+        {% if current_user.is_authenticated %}
+          <li><a href="{{ url_for('stream', username=current_user.username) }}">Following</a></li>
+          <li><a href="{{ url_for('post') }}">Create New Post</a></li>
+          <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        {% else %}
+          <li><a href="{{ url_for('login') }}">Login</a></li>
+          <li><a href="{{ url_for('register') }}">Register</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+  <div class="container">
+      {% block body %}
+      {% endblock %}
+  </div>
+
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+  <!-- Flash Messages -->
+  <script type="text/javascript">
+    {% with messages = get_flashed_messages(with_categories=True) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          function message(){
+            Materialize.toast('<span class="{{ category }}">{{ message }}</span>', 3000, 'rounded');
+          }
+          message();
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    $( document ).ready(function(){$(".button-collapse").sideNav();})
+  </script>
+
+  </body>
+</html>

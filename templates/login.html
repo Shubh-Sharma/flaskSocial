@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% from 'macros.html' import render_field %}
+
+{% block body %}
+<div class="row">
+    <div class="col s12 m6 offset-m3">
+        <div class="card blue-grey darken-4">
+            <div class="card-content white-text">
+                <span class="card-title center">Login</span>
+                <form method="post" action="" class="form">
+                    {{ form.hidden_tag() }}
+                    {% for field in form %}
+                        {{ render_field(field) }}
+                    {% endfor %}
+                    <button type="submit" class="btn btn-block btn-teal waves-effect waves-light" id="submit">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
